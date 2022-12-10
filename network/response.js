@@ -9,10 +9,11 @@ exports.success = function (req, res, message, status){
   })
 }
 
-exports.error = function (req, res, message, status){
+exports.error = function (req, res, message, status,err){
   let statusCode = status || 500
   let statusMessage = message || 'Internal server error'
-  
+  console.log('[error] ' + err)
+
   res.status(statusCode).send({
     error: true,
     status: statusCode,
