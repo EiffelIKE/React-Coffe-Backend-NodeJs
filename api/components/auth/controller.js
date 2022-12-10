@@ -20,13 +20,13 @@ module.exports = function (injectStore) {
 
   async function upsert (data) {
    const authData = {
-     id: data.id,
+    id: data.id,
    }
    if (data.name) {
-     authData.name = data.name
+    authData.name = data.name
    }
    if(data.password) {
-     authData.password = await bcrypt.hash(data.password, 5)
+    authData.password = await bcrypt.hash(data.password, 5)
    }
    return store.upsert(TABLA, authData)  
   }
