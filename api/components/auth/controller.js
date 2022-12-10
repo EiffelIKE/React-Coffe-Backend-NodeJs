@@ -8,6 +8,9 @@ module.exports = function (injectStore) {
 
   async function login(name, password){
     const data = await store.query(TABLA, {name: name})
+    if (!data){
+      throw error('Invalid user', 400)
+    }
     return bcrypt.compare(password, data.password)
       .then(match => {
         if(match){
