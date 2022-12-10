@@ -17,6 +17,7 @@ async function get(table, id){
 async function upsert(table, data){
   db[table] = db[table] ? db[table] : []
   db[table].push(data)
+  console.log(db[table])
 }
 
 async function remove(table, id){
