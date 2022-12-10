@@ -1,6 +1,7 @@
 const auth = require('../../../auth')
 const bcrypt = require('bcrypt')
 const TABLA = 'auth'
+const error = require('../../../utils/error')
 
 module.exports = function (injectStore) {
   let store = injectStore ? injectStore : require('../../../store/fake')
@@ -12,7 +13,7 @@ module.exports = function (injectStore) {
         if(match){
           return auth.sign(data)
         } else {
-          throw new Error('Invalid info')
+          throw error('Invalid info', 400)
         }
       }) 
    
