@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const {secret} = require('../config').jwt
+const error = require('../utils/error')
 
 function sign(data) {
  return jwt.sign(data, secret)
@@ -9,10 +10,9 @@ const check = {
   own: function (req, owner){
     const decodedToken = decodeHeader(req)
     console.log(decodedToken)
-
-    //TEst
+    //TEst id owner vs id token
     if(decodedToken.id !== owner) {
-      throw new Error('Invalid operation')
+      throw error('Invalid operation', 401)
     }
   }
 }
@@ -23,10 +23,10 @@ function verify(token) {
 
 function getToken(auth) {
   if(!auth) {
-    throw new Error('No token')
+    throw error('No token', 400)
   }
   if(auth.indexOf('Bearer ') === -1){
-    throw new Error('Invalid format') 
+    throw error('Invalid format', 400) 
   }
   console.log(auth)
   let token = auth.replace('Bearer ','')
