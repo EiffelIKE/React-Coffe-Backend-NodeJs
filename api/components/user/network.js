@@ -19,7 +19,7 @@ function list (req, res){
       response.success(req, res, list, 200)
     })
     .catch( err => {
-      response.error(req, res, err.message, 500)
+      response.error(req, res, err.message, 500, err)
     })
   
 }
@@ -40,7 +40,7 @@ function upsert (req, res){
       response.success(req, res, user, 201)
     })
     .catch( err => {
-      response.error(req, res, err.message, 500)
+      response.error(req, res, err.message + ' here', 500, err)
     })
 }
 
