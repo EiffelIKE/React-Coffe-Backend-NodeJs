@@ -11,15 +11,21 @@ module.exports = function (injectStore) {
     if (!data){
       throw error('Invalid user', 400)
     }
-    return bcrypt.compare(password, data.password)
+    let dataValues = Object.values(data)  //Data isnt a plain object
+    let fixData = {
+      id: dataValues[0],
+      name: dataValues[1],
+      username: dataValues[2],
+      password: dataValues[3]
+    }
+    return bcrypt.compare(password, dataValues[3])
       .then(match => {
         if(match){
-          return auth.sign(data)
+          return auth.sign(fixData)
         } else {
           throw error('Invalid info', 400)
         }
-      }) 
-   
+      })
   }
 
   async function upsert (data) {
@@ -28,6 +34,9 @@ module.exports = function (injectStore) {
    }
    if (data.name) {
     authData.name = data.name
+   }
+   if(data.username) {
+    authData.username = data.username
    }
    if(data.password) {
     authData.password = await bcrypt.hash(data.password, 5)
