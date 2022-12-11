@@ -10,7 +10,7 @@ const check = {
   own: function (req, owner){
     const decodedToken = decodeHeader(req)
     console.log(decodedToken)
-    //TEst id owner vs id token
+    //TEst id owner vs id token 
     if(decodedToken.id !== owner) {
       throw error('Invalid operation', 401)
     }

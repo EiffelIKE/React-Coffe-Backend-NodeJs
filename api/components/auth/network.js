@@ -11,14 +11,12 @@ const router = express.Router()
 router.post('/login', upsert)
 // router.put('/', upsert)
 
-function upsert(req, res){
+function upsert(req, res, next){
   controller.login(req.body.name, req.body.password)
     .then(token => {
       response.success(req, res, token, 200)
     })
-    .catch(err => {
-      response.error(req, res, 'Invalid info', 400, err)
-    })
+    .catch(next)
 }
 
 module.exports = router
