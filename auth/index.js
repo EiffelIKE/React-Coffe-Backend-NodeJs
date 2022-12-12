@@ -9,7 +9,6 @@ function sign(data) {
 const check = {
   own: function (req, owner){
     const decodedToken = decodeHeader(req)
-    console.log(decodedToken)
     //TEst id owner vs id token 
     if(decodedToken.id !== owner) {
       throw error('Invalid operation', 401)
@@ -28,7 +27,6 @@ function getToken(auth) {
   if(auth.indexOf('Bearer ') === -1){
     throw error('Invalid format', 400) 
   }
-  console.log(auth)
   let token = auth.replace('Bearer ','')
   return token
 }

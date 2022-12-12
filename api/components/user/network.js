@@ -10,7 +10,7 @@ const router = express.Router()
 router.get('/', list)
 router.get('/:id', get)
 router.post('/', upsert)
-router.put('/', secure('update'), upsert)
+router.put('/', secure('update'), update)
 
 
 //Internal fx()
@@ -37,6 +37,14 @@ function upsert (req, res, next){
       response.success(req, res, user, 201)
     })
     .catch(next)
+}
+
+function update (req, res, next) {
+  controller.update(req.body)
+  .then( user =>{
+    response.success(req, res, user, 201)
+  })
+  .catch(next)
 }
 
 module.exports = router
