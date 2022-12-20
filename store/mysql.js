@@ -41,7 +41,7 @@ function get(table, id) {
   return new Promise((resolve, reject) =>{
     connection.query(`SELECT * FROM ${table} WHERE id=${id}`, (err, data)=>{
       err && reject(err)
-      data.length === 0 && reject('No such user')
+      if( data && data.length === 0) {reject('No such user')}
       resolve(data)
     })
   })
@@ -74,11 +74,17 @@ function update(table, data) {
   })
 }
 
-function query(table, query) {
+function query(table, query, join) {
+  let joinQuery = ''
+  if(join) {
+    const key = Object.keys(join)[0]
+    const value = join[key];
+    joinQuery = `JOIN ${key} ON ${table}.${value} = ${key}.id`
+  }
   return new Promise((resolve, reject)=>{
-    connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, result) =>{
+    connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, result) =>{
       if(err) return reject(err)
-      resolve(result[0] || null)
+      resolve(result || null)
     })
   })
 }

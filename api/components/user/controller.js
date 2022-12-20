@@ -36,10 +36,28 @@ module.exports = function (injectStore) {
     return []
   }
 
+  async function favorite(user, product) {
+    await store.upsert( TABLA + '_favorites', {
+      products_to: product,
+      user_from: user
+    })
+    return []
+  }
+  
+  async function getFavorites(id) {
+    const join = {}
+    join['products'] = 'products_to'
+    const query = { user_from: id }
+
+    return await store.query(TABLA + '_favorites', query, join)
+  }
+
   return {
     list,
     get,
     upsert,
-    update
+    update,
+    favorite,
+    getFavorites
   }
 }

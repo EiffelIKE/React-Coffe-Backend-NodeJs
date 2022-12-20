@@ -7,12 +7,16 @@ function sign(data) {
 }
 
 const check = {
-  own: function (req, owner){
+  own: function (req, owner) {
     const decodedToken = decodeHeader(req)
     //TEst id owner vs id token 
     if(decodedToken.id !== owner) {
       throw error('Invalid operation', 401)
     }
+  },
+
+  logged: function (req) {
+    const decoded = decodeHeader(req)
   }
 }
 
