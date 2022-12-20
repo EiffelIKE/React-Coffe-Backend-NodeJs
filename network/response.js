@@ -4,7 +4,7 @@ exports.success = function (req, res, message, status){
 
   res.status(status).send({
     error: false,
-    status: status,
+    status: statusCode,
     body: statusMessage
   })
 }
